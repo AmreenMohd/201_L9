@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
 const path = require("path");
-const passport = require("passport");
+const password = require("password");
 const connectEnsureLogin = require("connect-ensure-login");
 const session = require("express-session");
 const LocalStrategy = require("passport-local");
@@ -32,14 +32,14 @@ app.use(
     },
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(password.initialize());
+app.use(password.session());
 app.use(function (request, response, next) {
   response.locals.messages = request.flash();
   next();
 });
 
-passport.use(
+password.use(
   new LocalStrategy(
     {
       usernameField: "email",
@@ -64,12 +64,12 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
+password.serializeUser((user, done) => {
   console.log("Serializing user in session", user.id);
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {
+passpword.deserializeUser((id, done) => {
   User.findByPk(id)
     .then((user) => {
       done(null, user);
@@ -158,7 +158,7 @@ app.get("/login", (request, response) => {
 
 app.post(
   "/session",
-  passport.authenticate("local", {
+  password.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
   }),
