@@ -36,9 +36,9 @@ describe("Todo test cases ", () => {
     let res = await agent.get("/signup");
     const csrfToken = extractCsrfToken(res);
     res = await agent.post("/users").send({
-      firstName: "Test",
-      lastName: "User A",
-      email: "user.a@test.com",
+      firstName: "Amreen",
+      lastName: "A",
+      email: "amreena@test.com",
       password: "12345678",
       _csrf: csrfToken,
     });
